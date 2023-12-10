@@ -25,15 +25,19 @@ node {
     }
 
     stage('Build Docker') {
-        sh "docker build -t mynginx:${env.GIT_COMMIT} ."
-        sh "docker tag mynginx:${env.GIT_COMMIT} 750224197114.dkr.ecr.ap-southeast-1.amazonaws.com/mynginx:${env.GIT_COMMIT}"
+        sh 'git rev-parse HEAD > commit'
+        def commit = readFile('commit').trim()
+        sh "docker build -t mynginx:${commit} ."
+        sh "docker tag mynginx:${commit} 750224197114.dkr.ecr.ap-southeast-1.amazonaws.com/mynginx:${commit}"
     }
 
     stage('Push Image') {
         // inside this block your credentials will be available as env variables
         withVault([configuration: configuration, vaultSecrets: secrets]) {
+        sh 'git rev-parse HEAD > commit'
+        def commit = readFile('commit').trim()            
         sh 'aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 750224197114.dkr.ecr.ap-southeast-1.amazonaws.com'
-        sh "docker push 750224197114.dkr.ecr.ap-southeast-1.amazonaws.com/mynginx:${env.GIT_COMMIT}"
+        sh "docker push 750224197114.dkr.ecr.ap-southeast-1.amazonaws.com/mynginx:${commit}"
         }
     }
 
