@@ -28,7 +28,7 @@ node {
         sh 'git rev-parse HEAD > commit'
         def commit = readFile('commit').trim()
         sh "docker build -t mynginx:${commit} ."
-        sh "docker tag mynginx:${commit} 750224197114.dkr.ecr.ap-southeast-1.amazonaws.com/mynginx:${commit}"
+        sh "docker tag mynginx:${commit} 750224197114.dkr.ecr.ap-southeast-1.amazonaws.com/test-microservice:${commit}"
     }
 
     stage('Push Image') {
@@ -37,7 +37,7 @@ node {
         sh 'git rev-parse HEAD > commit'
         def commit = readFile('commit').trim()            
         sh 'aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 750224197114.dkr.ecr.ap-southeast-1.amazonaws.com'
-        sh "docker push 750224197114.dkr.ecr.ap-southeast-1.amazonaws.com/mynginx:${commit}"
+        sh "docker push 750224197114.dkr.ecr.ap-southeast-1.amazonaws.com/test-microservice:${commit}"
         }
     }
 
