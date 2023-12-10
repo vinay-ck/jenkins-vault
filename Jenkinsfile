@@ -25,7 +25,7 @@ node {
     }
 
     stage('Build Docker') {
-        sh "docker build -t mynginx:${env.GIT_COMMIT}"
+        sh "docker build -t mynginx:${env.GIT_COMMIT} ."
         sh "docker tag mynginx:${env.GIT_COMMIT} 750224197114.dkr.ecr.ap-southeast-1.amazonaws.com/mynginx:${env.GIT_COMMIT}"
     }
 
