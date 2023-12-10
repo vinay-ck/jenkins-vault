@@ -4,7 +4,7 @@ node {
     // the default is engine version 2 unless otherwise specified globally.
     
     def secrets = [
-        [path: 'aws/creds/jenkins_ecr_admin', engineVersion: 1, secretValues: 
+        [path: 'aws/sts/jenkins_ecr_admin', engineVersion: 1, secretValues: 
             [
                 [envVar: 'AWS_ACCESS_KEY_ID', vaultKey: 'access_key'],
 	            [envVar: 'AWS_SECRET_ACCESS_KEY', vaultKey: 'secret_key'],
