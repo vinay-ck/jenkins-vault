@@ -1,5 +1,5 @@
 FROM ubuntu 
-MAINTAINER demousr@gmail.com 
+MAINTAINER vinay.naidu@cloud-kinetics.com 
 
 RUN apt-get update 
 RUN apt-get install nginx -y 
